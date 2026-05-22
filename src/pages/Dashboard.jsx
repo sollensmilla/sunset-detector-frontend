@@ -1,31 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useSensorData }
+    from '../hooks/useSensorData'
+
+import CurrentColor
+    from '../components/CurrentColor'
 
 export default function Dashboard() {
 
-    const [data, setData] = useState([])
-
-    const [loading, setLoading] =
-        useState(true)
-
-    useEffect(() => {
-
-        fetch(
-            'https://sky-api-production-9cec.up.railway.app/api/data/'
-        )
-            .then(res => res.json())
-            .then(data => {
-
-                setData(data)
-
-                setLoading(false)
-            })
-
-    }, [])
+    const {
+        data,
+        loading
+    } = useSensorData()
 
     if (loading) {
 
-        return <p>Loading...</p>
+        return <p>Loading sky colors...</p>
     }
+
+    if (!data.length) {
+
+        return <p>No sky data available</p>
+    }
+
+    const latest =
+        data[data.length - 1]
 
     return (
 
@@ -35,15 +32,9 @@ export default function Dashboard() {
                 Sunset Dashboard
             </h1>
 
-            <pre>
-                {
-                    JSON.stringify(
-                        data[0],
-                        null,
-                        2
-                    )
-                }
-            </pre>
+            <CurrentColor
+                latest={latest}
+            />
 
         </div>
     )
