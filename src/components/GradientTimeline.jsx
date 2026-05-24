@@ -1,65 +1,77 @@
-import { softenColor }
-    from '../utils/colorUtils'
-
 import {
     formatSwedishTime
 }
 from '../utils/timeUtils'
 
+import {
+    gradientStops
+}
+from '../utils/gradientStops'
+
 export default function GradientTimeline({
     data
 }) {
 
-    const sampled =
-        data.filter(
-            (_, index) =>
-                index % 4 === 0
+    const colors =
+        gradientStops(
+            data,
+            14
         )
 
     const gradient =
-        sampled
-            .map(item =>
-                softenColor(
-                    item.skyColor
-                )
-            )
-            .join(', ')
+        colors.join(', ')
 
     const first =
-        sampled[0]
+        data[0]
 
     const middle =
-        sampled[
+        data[
             Math.floor(
-                sampled.length / 2
+                data.length / 2
             )
         ]
 
     const last =
-        sampled[
-            sampled.length - 1
+        data[
+            data.length - 1
         ]
 
     return (
 
-        <section
-            className="timeline-card"
-        >
+        <section className="timeline-card">
 
-            <h2>
-                Today's Sky
-            </h2>
+            <div className="timeline-header">
+
+                <div>
+
+                    <p className="card-label">
+                        Timeline
+                    </p>
+
+                    <h2>
+                        Today's Sky
+                    </h2>
+
+                </div>
+
+            </div>
 
             <div
-                className="gradient-bar"
-                style={{
-                    background:
-                        `linear-gradient(
-                            to right,
-                            ${gradient}
-                        )`
-                }}
-            />
+                className="gradient-wrapper"
+            >
+
+                <div
+                    className="gradient-bar"
+                    style={{
+                        background:
+                            `linear-gradient(
+                                to right,
+                                ${gradient}
+                            )`
+                    }}
+                />
+
+            </div>
 
             <div className="timeline-labels">
 

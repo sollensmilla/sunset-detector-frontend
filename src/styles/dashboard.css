@@ -1,3 +1,8 @@
+* {
+
+    box-sizing: border-box;
+}
+
 body {
 
     margin: 0;
@@ -7,29 +12,105 @@ body {
         sans-serif;
 
     background:
-        #0f172a;
+        linear-gradient(to bottom,
+            #f7f4ef,
+            #ece7df);
 
-    color: white;
+    color: #1d1d1f;
 }
 
 .dashboard {
 
-    max-width: 1100px;
+    position: relative;
+
+    min-height: 100vh;
+
+    max-width: 1300px;
 
     margin: auto;
 
-    padding: 2rem;
+    padding:
+        4rem 2rem;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
-.title {
+.background-glow {
 
-    font-size: 4rem;
+    position: absolute;
 
-    font-weight: 700;
+    width: 900px;
+    height: 900px;
+
+    background:
+        radial-gradient(circle,
+            rgba(255,
+                170,
+                120,
+                0.35),
+            transparent 70%);
+
+    top: -300px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    filter:
+        blur(80px);
+
+    z-index: 0;
+}
+
+.hero {
+
+    position: relative;
+
+    z-index: 2;
 
     text-align: center;
 
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
+}
+
+.eyebrow {
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.3em;
+
+    opacity: 0.6;
+
+    font-size: 0.8rem;
+
+    margin-bottom: 1rem;
+}
+
+.hero h1 {
+
+    font-size:
+        clamp(4rem,
+            10vw,
+            7rem);
+
+    line-height: 1;
+
+    margin: 0;
+
+    font-weight: 700;
+}
+
+.subtitle {
+
+    margin-top: 1.5rem;
+
+    opacity: 0.7;
+
+    font-size: 1.1rem;
 }
 
 .current-card {
@@ -38,22 +119,33 @@ body {
 
     overflow: hidden;
 
-    border-radius: 2rem;
+    border-radius: 2.5rem;
 
-    padding: 3rem;
-
-    min-height: 240px;
-
-    box-shadow:
-        0 20px 60px rgba(0,
-            0,
-            0,
-            0.4);
+    min-height: 320px;
 
     margin-bottom: 2rem;
+
+    box-shadow:
+        0 10px 40px rgba(0,
+            0,
+            0,
+            0.08);
 }
 
-.overlay {
+.current-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    filter:
+        saturate(140%) brightness(1.1) blur(20px);
+
+    transform:
+        scale(1.1);
+}
+
+.glass-overlay {
 
     position: absolute;
 
@@ -61,49 +153,86 @@ body {
 
     background:
         linear-gradient(to bottom right,
-            rgba(255, 255, 255, 0.15),
-            rgba(255, 255, 255, 0));
+            rgba(255, 255, 255, 0.55),
+            rgba(255, 255, 255, 0.12));
 
     backdrop-filter:
-        blur(40px);
+        blur(25px);
 }
 
-.content {
+.current-content {
 
     position: relative;
 
     z-index: 2;
+
+    padding: 3rem;
 }
 
-.content h2 {
+.card-label {
 
-    font-size: 2rem;
+    text-transform: uppercase;
 
-    margin-bottom: 2rem;
-}
+    letter-spacing: 0.25em;
 
-.stats {
-
-    display: flex;
-
-    gap: 3rem;
-}
-
-.stats div {
-
-    display: flex;
-
-    flex-direction: column;
-}
-
-.stats span {
+    font-size: 0.75rem;
 
     opacity: 0.7;
 
-    margin-bottom: 0.3rem;
+    margin-bottom: 1rem;
 }
 
-.stats strong {
+.current-content h2 {
+
+    font-size: 3rem;
+
+    margin: 0;
+}
+
+.stats-grid {
+
+    display: flex;
+
+    gap: 2rem;
+
+    margin-top: 3rem;
+}
+
+.stat {
+
+    background:
+        rgba(255,
+            255,
+            255,
+            0.35);
+
+    padding:
+        1rem 1.5rem;
+
+    border-radius: 1.2rem;
+
+    backdrop-filter:
+        blur(20px);
+
+    min-width: 140px;
+
+    border:
+        1px solid rgba(255,
+            255,
+            255,
+            0.5);
+}
+
+.stat span {
+
+    display: block;
+
+    opacity: 0.7;
+
+    margin-bottom: 0.5rem;
+}
+
+.stat strong {
 
     font-size: 1.8rem;
 }
@@ -111,34 +240,66 @@ body {
 .timeline-card {
 
     background:
-        rgba(255, 255, 255, 0.06);
+        rgba(255,
+            255,
+            255,
+            0.45);
 
-    border-radius: 2rem;
+    border:
+        1px solid rgba(255,
+            255,
+            255,
+            0.5);
+
+    border-radius: 2.5rem;
 
     padding: 2rem;
 
     backdrop-filter:
-        blur(20px);
+        blur(30px);
+
+    box-shadow:
+        0 10px 40px rgba(0,
+            0,
+            0,
+            0.08);
 }
 
-.timeline-card h2 {
+.timeline-header {
 
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.timeline-header h2 {
+
+    margin: 0;
+
+    font-size: 2rem;
+}
+
+.gradient-wrapper {
+
+    padding: 1rem 0;
 }
 
 .gradient-bar {
 
-    height: 120px;
+    height: 140px;
 
     border-radius: 999px;
 
     box-shadow:
-        0 0 40px rgba(255,
+        inset 0 0 20px rgba(255,
             255,
             255,
-            0.15);
+            0.4),
+        0 6px 25px rgba(0,
+            0,
+            0,
+            0.08);
 
-    margin-bottom: 1rem;
+    filter:
+        saturate(130%);
 }
 
 .timeline-labels {
@@ -147,16 +308,25 @@ body {
 
     justify-content: space-between;
 
+    margin-top: 1.5rem;
+
     opacity: 0.7;
 }
 
-.center {
+.loading {
 
     display: flex;
 
-    justify-content: center;
-
     align-items: center;
 
-    height: 100vh;
+    justify-content: center;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(to bottom,
+            #f7f4ef,
+            #ece7df);
+
+    color: #1d1d1f;
 }

@@ -20,7 +20,7 @@ export default function Dashboard() {
 
         return (
 
-            <div className="center">
+            <div className="loading">
 
                 <p>
                     Loading sky colors...
@@ -34,7 +34,7 @@ export default function Dashboard() {
 
         return (
 
-            <div className="center">
+            <div className="loading">
 
                 <p>
                     No sky data available
@@ -51,9 +51,25 @@ export default function Dashboard() {
 
         <main className="dashboard">
 
-            <h1 className="title">
-                Sunset Dashboard
-            </h1>
+            <div className="background-glow" />
+
+            <header className="hero">
+
+                <p className="eyebrow">
+                    Live atmospheric sensing
+                </p>
+
+                <h1>
+                    Sunset Dashboard
+                </h1>
+
+                <p className="subtitle">
+                    Real-time light and sky
+                    color analysis from
+                    an ESP32 sensor.
+                </p>
+
+            </header>
 
             <CurrentColor
                 latest={latest}

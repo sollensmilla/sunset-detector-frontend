@@ -6,47 +6,70 @@ export default function CurrentColor({
 
         <section
             className="current-card"
-            style={{
-                background:
-                    latest.skyColor
-            }}
         >
 
-            <div className="overlay" />
+            <div
+                className="current-background"
+                style={{
+                    background:
+                        latest.skyColor
+                }}
+            />
 
-            <div className="content">
+            <div className="glass-overlay" />
 
-                <h2>
-                    Current Sky
-                </h2>
+            <div className="current-content">
 
-                <div className="stats">
+                <div>
 
-                    <div>
+                    <p className="card-label">
+                        Current Color
+                    </p>
+
+                    <h2>
+                        {
+                            latest.isSunset
+                                ? 'Sunset tones'
+                                : 'Daylight tones'
+                        }
+                    </h2>
+
+                </div>
+
+                <div className="stats-grid">
+
+                    <div className="stat">
 
                         <span>
                             Lux
                         </span>
 
                         <strong>
-                            {latest.lux}
+                            {
+                                Math.round(
+                                    latest.lux
+                                )
+                            }
                         </strong>
 
                     </div>
 
-                    <div>
+                    <div className="stat">
 
                         <span>
                             CCT
                         </span>
 
                         <strong>
-                            {latest.cct ?? '—'}
+                            {
+                                latest.cct
+                                ?? '—'
+                            }
                         </strong>
 
                     </div>
 
-                    <div>
+                    <div className="stat">
 
                         <span>
                             Sunset
