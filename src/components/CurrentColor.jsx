@@ -16,7 +16,7 @@ export default function CurrentColor({
         >
 
             <h2>
-                Current Sky
+                Current Color
             </h2>
 
             <p>

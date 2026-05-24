@@ -1,8 +1,8 @@
-import { useSensorData }
-    from '../hooks/useSensorData'
+import { useSensorData } from '../hooks/useSensorData'
 
-import CurrentColor
-    from '../components/CurrentColor'
+import CurrentColor from '../components/CurrentColor'
+
+import GradientTimeline from '../components/GradientTimeline'
 
 export default function Dashboard() {
 
@@ -35,6 +35,10 @@ export default function Dashboard() {
             <CurrentColor
                 latest={latest}
             />
+
+            <GradientTimeline
+                data={data}
+            />  
 
         </div>
     )
