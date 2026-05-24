@@ -4,38 +4,68 @@ export default function CurrentColor({
 
     return (
 
-        <div
+        <section
+            className="current-card"
             style={{
                 background:
-                    latest.skyColor,
-
-                padding: '2rem',
-                borderRadius: '1rem',
-                color: 'white'
+                    latest.skyColor
             }}
         >
 
-            <h2>
-                Current Color
-            </h2>
+            <div className="overlay" />
 
-            <p>
-                Lux: {latest.lux}
-            </p>
+            <div className="content">
 
-            <p>
-                CCT: {latest.cct}
-            </p>
+                <h2>
+                    Current Sky
+                </h2>
 
-            <p>
-                Sunset:
-                {
-                    latest.isSunset
-                        ? ' Yes'
-                        : ' No'
-                }
-            </p>
+                <div className="stats">
 
-        </div>
+                    <div>
+
+                        <span>
+                            Lux
+                        </span>
+
+                        <strong>
+                            {latest.lux}
+                        </strong>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            CCT
+                        </span>
+
+                        <strong>
+                            {latest.cct ?? '—'}
+                        </strong>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Sunset
+                        </span>
+
+                        <strong>
+                            {
+                                latest.isSunset
+                                    ? 'Yes'
+                                    : 'No'
+                            }
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
     )
 }

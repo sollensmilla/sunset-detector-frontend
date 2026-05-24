@@ -1,8 +1,13 @@
-import { useSensorData } from '../hooks/useSensorData'
+import { useSensorData }
+    from '../hooks/useSensorData'
 
-import CurrentColor from '../components/CurrentColor'
+import CurrentColor
+    from '../components/CurrentColor'
 
-import GradientTimeline from '../components/GradientTimeline'
+import GradientTimeline
+    from '../components/GradientTimeline'
+
+import '../styles/dashboard.css'
 
 export default function Dashboard() {
 
@@ -13,12 +18,30 @@ export default function Dashboard() {
 
     if (loading) {
 
-        return <p>Loading sky colors...</p>
+        return (
+
+            <div className="center">
+
+                <p>
+                    Loading sky colors...
+                </p>
+
+            </div>
+        )
     }
 
     if (!data.length) {
 
-        return <p>No sky data available</p>
+        return (
+
+            <div className="center">
+
+                <p>
+                    No sky data available
+                </p>
+
+            </div>
+        )
     }
 
     const latest =
@@ -26,9 +49,9 @@ export default function Dashboard() {
 
     return (
 
-        <div>
+        <main className="dashboard">
 
-            <h1>
+            <h1 className="title">
                 Sunset Dashboard
             </h1>
 
@@ -38,8 +61,8 @@ export default function Dashboard() {
 
             <GradientTimeline
                 data={data}
-            />  
+            />
 
-        </div>
+        </main>
     )
 }
