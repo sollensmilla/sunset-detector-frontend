@@ -148,8 +148,8 @@ export function useSensorData(
 
                         timestamp:
                             parsed.timestamp
-                            ?? new Date()
-                                .toISOString(),
+                                ? new Date(parsed.timestamp.replace(' ', 'T')).toISOString()
+                                : new Date().toISOString(),
 
                         lux:
                             parsed.lux ?? 0,

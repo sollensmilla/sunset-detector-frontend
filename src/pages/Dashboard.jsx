@@ -26,7 +26,7 @@ export default function Dashboard() {
         data: chartData,
         loading: chartLoading
     } = useSensorData(12)
-    
+
     if (loading) {
 
         return (
@@ -61,23 +61,25 @@ export default function Dashboard() {
     const grouped =
         groupByDay(timelineData)
 
-    const dates =
-        Object.keys(grouped)
-            .sort()
+    const todayKey =
+        new Date()
+            .toLocaleDateString('sv-SE', {
+                timeZone: 'Europe/Stockholm'
+            })
 
     const today =
-        grouped[
-            dates[
-                dates.length - 1
-            ]
-        ]
+        grouped[todayKey] ?? []
+
+    const yesterdayDate = new Date()
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1)
+
+    const yesterdayKey =
+        yesterdayDate.toLocaleDateString('sv-SE', {
+            timeZone: 'Europe/Stockholm'
+        })
 
     const yesterday =
-        grouped[
-            dates[
-                dates.length - 2
-            ]
-        ]
+        grouped[yesterdayKey] ?? []
 
     return (
 
@@ -108,7 +110,7 @@ export default function Dashboard() {
             />
 
             {
-                today && (
+                today.length > 0 && (
 
                     <GradientTimeline
                         title="Today's Sky"
@@ -119,7 +121,7 @@ export default function Dashboard() {
             }
 
             {
-                yesterday && (
+                yesterday.length > 0 && (
 
                     <GradientTimeline
                         title="Yesterday's Sky"
@@ -127,10 +129,11 @@ export default function Dashboard() {
                     />
                 )
             }
-    
-    <HistoricalChart
-        data={chartData}
-    />
+
+            <HistoricalChart
+                data={chartData}
+            />
+
         </main>
     )
 }
