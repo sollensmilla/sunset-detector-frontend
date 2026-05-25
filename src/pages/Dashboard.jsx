@@ -7,6 +7,9 @@ import CurrentColor
 import GradientTimeline
     from '../components/GradientTimeline'
 
+import HistoricalChart
+    from '../components/HistoricalChart'
+
 import { groupByDay }
     from '../utils/groupByDay'
 
@@ -15,10 +18,15 @@ import '../styles/dashboard.css'
 export default function Dashboard() {
 
     const {
-        data,
+        data: timelineData,
         loading
-    } = useSensorData()
+    } = useSensorData(48)
 
+    const {
+        data: chartData,
+        loading: chartLoading
+    } = useSensorData(12)
+    
     if (loading) {
 
         return (
@@ -33,7 +41,7 @@ export default function Dashboard() {
         )
     }
 
-    if (!data.length) {
+    if (!timelineData.length) {
 
         return (
 
@@ -48,10 +56,10 @@ export default function Dashboard() {
     }
 
     const latest =
-        data[data.length - 1]
+        timelineData[timelineData.length - 1]
 
     const grouped =
-        groupByDay(data)
+        groupByDay(timelineData)
 
     const dates =
         Object.keys(grouped)
@@ -119,7 +127,10 @@ export default function Dashboard() {
                     />
                 )
             }
-
+    
+    <HistoricalChart
+        data={chartData}
+    />
         </main>
     )
 }
