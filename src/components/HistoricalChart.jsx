@@ -71,7 +71,7 @@ export default function HistoricalChart({
                 yAxisID: 'y1',
 
 data: data.map(
-    entry => entry.cct || null
+    entry => entry.cct 
 ),
 
                 borderColor:

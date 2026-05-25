@@ -1,5 +1,13 @@
 export function softenColor(rgbString) {
 
+    if (
+        !rgbString ||
+        typeof rgbString !== 'string'
+    ) {
+
+        return 'rgb(255,255,255)'
+    }
+
     const values =
         rgbString.match(/\d+/g)
 
