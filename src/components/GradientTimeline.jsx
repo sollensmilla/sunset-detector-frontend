@@ -1,15 +1,10 @@
-import {
-    formatSwedishTime
-}
-from '../utils/timeUtils'
-
-import {
-    gradientStops
-}
-from '../utils/gradientStops'
+import { gradientStops }
+    from '../utils/gradientStops'
 
 export default function GradientTimeline({
-    data
+    data,
+    title,
+    isToday = false
 }) {
 
     const colors =
@@ -21,20 +16,32 @@ export default function GradientTimeline({
     const gradient =
         colors.join(', ')
 
-    const first =
-        data[0]
+    const now =
+        new Date()
 
-    const middle =
-        data[
-            Math.floor(
-                data.length / 2
-            )
-        ]
+    const currentTime =
+        now.toLocaleTimeString(
+            'sv-SE',
+            {
+                timeZone:
+                    'Europe/Stockholm',
 
-    const last =
-        data[
-            data.length - 1
-        ]
+                hour: '2-digit',
+                minute: '2-digit'
+            }
+        )
+
+    const labels = {
+
+        start: '00:00',
+
+        middle: '12:00',
+
+        end:
+            isToday
+                ? currentTime
+                : '23:59'
+    }
 
     return (
 
@@ -49,7 +56,7 @@ export default function GradientTimeline({
                     </p>
 
                     <h2>
-                        Today's Sky
+                        {title}
                     </h2>
 
                 </div>
@@ -76,27 +83,15 @@ export default function GradientTimeline({
             <div className="timeline-labels">
 
                 <span>
-                    {
-                        formatSwedishTime(
-                            first.timestamp
-                        )
-                    }
+                    {labels.start}
                 </span>
 
                 <span>
-                    {
-                        formatSwedishTime(
-                            middle.timestamp
-                        )
-                    }
+                    {labels.middle}
                 </span>
 
                 <span>
-                    {
-                        formatSwedishTime(
-                            last.timestamp
-                        )
-                    }
+                    {labels.end}
                 </span>
 
             </div>

@@ -7,6 +7,9 @@ import CurrentColor
 import GradientTimeline
     from '../components/GradientTimeline'
 
+import { groupByDay }
+    from '../utils/groupByDay'
+
 import '../styles/dashboard.css'
 
 export default function Dashboard() {
@@ -47,6 +50,27 @@ export default function Dashboard() {
     const latest =
         data[data.length - 1]
 
+    const grouped =
+        groupByDay(data)
+
+    const dates =
+        Object.keys(grouped)
+            .sort()
+
+    const today =
+        grouped[
+            dates[
+                dates.length - 1
+            ]
+        ]
+
+    const yesterday =
+        grouped[
+            dates[
+                dates.length - 2
+            ]
+        ]
+
     return (
 
         <main className="dashboard">
@@ -75,9 +99,26 @@ export default function Dashboard() {
                 latest={latest}
             />
 
-            <GradientTimeline
-                data={data}
-            />
+            {
+                today && (
+
+                    <GradientTimeline
+                        title="Today's Sky"
+                        data={today}
+                        isToday={true}
+                    />
+                )
+            }
+
+            {
+                yesterday && (
+
+                    <GradientTimeline
+                        title="Yesterday's Sky"
+                        data={yesterday}
+                    />
+                )
+            }
 
         </main>
     )
