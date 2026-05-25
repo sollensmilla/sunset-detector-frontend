@@ -1,3 +1,8 @@
+import {
+    useMemo,
+    useRef
+} from 'react'
+
 import { gradientStops }
     from '../utils/gradientStops'
 
@@ -7,29 +12,65 @@ export default function GradientTimeline({
     isToday = false
 }) {
 
-    const colors =
-        gradientStops(
+    const initialGradient =
+        useRef(null)
+
+    const colors = useMemo(
+
+        () => gradientStops(
             data,
             14
-        )
+        ),
+
+        isToday
+            ? [data]
+            : []
+    )
 
     const gradient =
-        colors.join(', ')
+        colors.length
 
-    const now =
-        new Date()
+            ? colors.join(', ')
 
-    const currentTime =
-        now.toLocaleTimeString(
-            'sv-SE',
-            {
-                timeZone:
-                    'Europe/Stockholm',
+            : `
+                rgb(255,255,255),
+                rgb(240,240,240)
+              `
 
-                hour: '2-digit',
-                minute: '2-digit'
-            }
-        )
+    if (
+        !isToday &&
+        !initialGradient.current
+    ) {
+
+        initialGradient.current =
+            gradient
+    }
+
+    const finalGradient =
+
+        isToday
+
+            ? gradient
+
+            : initialGradient.current
+
+    const currentTime = useMemo(
+
+        () => new Date()
+            .toLocaleTimeString(
+                'sv-SE',
+                {
+                    timeZone:
+                        'Europe/Stockholm',
+
+                    hour: '2-digit',
+
+                    minute: '2-digit'
+                }
+            ),
+
+        []
+    )
 
     const labels = {
 
@@ -69,12 +110,22 @@ export default function GradientTimeline({
 
                 <div
                     className="gradient-bar"
+
                     style={{
+
                         background:
                             `linear-gradient(
                                 to right,
-                                ${gradient}
-                            )`
+                                ${finalGradient}
+                            )`,
+
+                        transition:
+                            isToday
+                                ? 'background 2s ease-in-out'
+                                : 'none',
+
+                        willChange:
+                            'background'
                     }}
                 />
 

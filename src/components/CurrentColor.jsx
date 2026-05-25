@@ -8,13 +8,16 @@ export default function CurrentColor({
             className="current-card"
         >
 
-            <div
-                className="current-background"
-                style={{
-                    background:
-                        latest.skyColor
-                }}
-            />
+<div
+    className="current-background"
+    style={{
+        background:
+            latest.skyColor,
+
+        transition:
+            'background 1.8s ease-in-out'
+    }}
+/>
 
             <div className="glass-overlay" />
 

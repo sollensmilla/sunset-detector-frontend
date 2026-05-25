@@ -6,7 +6,7 @@ export function gradientStops(
     segments = 16
 ) {
 
-    if (!data.length) {
+    if (!data?.length) {
 
         return []
     }
@@ -39,10 +39,17 @@ export function gradientStops(
 
         if (middle) {
 
+            const color =
+
+                middle.skyColor
+
+                ?? middle.rgb
+
+                ?? 'rgb(255,255,255)'
+
             stops.push(
-                softenColor(
-                    middle.skyColor
-                )
+
+                softenColor(color)
             )
         }
     }

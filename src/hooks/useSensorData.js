@@ -21,13 +21,62 @@ export function useSensorData(
             `https://sky-api-production-9cec.up.railway.app/api/data?hours=${hours}`
         )
             .then(res => res.json())
+
             .then(initialData => {
 
-                setData(initialData)
+                const normalized =
+                    initialData.map(item => {
+
+                        const skyColor =
+
+                            item.skyColor
+
+                            ?? item.rgb
+
+                            ?? (
+
+                                item.rgb?.r !== undefined
+
+                                    ? `rgb(
+                                        ${item.rgb.r},
+                                        ${item.rgb.g},
+                                        ${item.rgb.b}
+                                      )`
+
+                                    : 'rgb(255,255,255)'
+                            )
+
+                        return {
+
+                            ...item,
+
+                            skyColor,
+
+                            rgb:
+                                skyColor,
+
+                            isSunset:
+                                item.isSunset
+                                ?? (
+                                    item.cct ?? 0
+                                ) < 4000
+                        }
+                    })
+
+                setData(normalized)
 
                 setLoading(false)
             })
 
+            .catch(error => {
+
+                console.error(
+                    'Fetch error:',
+                    error
+                )
+
+                setLoading(false)
+            })
 
         const client = mqtt.connect(
 
@@ -51,7 +100,19 @@ export function useSensorData(
                 )
 
                 client.subscribe(
-                    'lnu/iot/ss226uk/sensor'
+
+                    import.meta.env.VITE_MQTT_TOPIC,
+
+                    err => {
+
+                        if (err) {
+
+                            console.error(
+                                'Subscribe error:',
+                                err
+                            )
+                        }
+                    }
                 )
             }
         )
@@ -72,37 +133,64 @@ export function useSensorData(
                         parsed
                     )
 
+                    const skyColor =
+                        parsed.rgb
+
+                            ? `rgb(
+                                ${parsed.rgb.r},
+                                ${parsed.rgb.g},
+                                ${parsed.rgb.b}
+                              )`
+
+                            : 'rgb(255,255,255)'
+
                     const realtimeEntry = {
 
                         timestamp:
-                            new Date(),
+                            parsed.timestamp
+                            ?? new Date()
+                                .toISOString(),
 
                         lux:
-                            parsed.lux,
+                            parsed.lux ?? 0,
 
                         cct:
-                            parsed.cct,
+                            parsed.cct ?? 0,
 
                         rgb:
-                            parsed.rgb
-                                ? `rgb(
-            ${parsed.rgb.r},
-            ${parsed.rgb.g},
-            ${parsed.rgb.b}
-          )`
-                                : 'rgb(255,255,255)'
+                            skyColor,
+
+                        skyColor,
+
+                        isSunset:
+                            (parsed.cct ?? 0) < 4000
                     }
 
                     setData(prev => [
 
-                        ...prev,
+                        ...prev.slice(-500),
+
                         realtimeEntry
                     ])
 
                 } catch (error) {
 
-                    console.error(error)
+                    console.error(
+                        'MQTT parse error:',
+                        error
+                    )
                 }
+            }
+        )
+
+        client.on(
+            'error',
+            error => {
+
+                console.error(
+                    'MQTT error:',
+                    error
+                )
             }
         )
 
