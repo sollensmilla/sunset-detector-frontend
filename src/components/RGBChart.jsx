@@ -30,14 +30,13 @@ export default function RGBChart({
     data
 }) {
 
-    // Sortera efter timestamp
-    const sortedData = [...data].sort(
-        (a, b) =>
-            new Date(a.timestamp) -
-            new Date(b.timestamp)
-    )
+const sortedData = [...data].sort(
+    (a, b) =>
+        a.timestamp.localeCompare(
+            b.timestamp
+        )
+)
 
-    // Visa endast senaste 50 mätningarna
     const recentData =
         sortedData.slice(-50)
 
@@ -192,6 +191,7 @@ export default function RGBChart({
             <div className="chart-wrapper">
 
                 <Line
+                    key={recentData.length}
                     data={chartData}
                     options={options}
                 />

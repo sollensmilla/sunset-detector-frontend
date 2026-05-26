@@ -151,9 +151,8 @@ export function useSensorData(
                     const realtimeEntry = {
 
                         timestamp:
-                            parsed.timestamp
-                                ? new Date(parsed.timestamp.replace(' ', 'T')).toISOString()
-                                : new Date().toISOString(),
+                            parsed.timestamp ||
+                            new Date().toISOString(),
 
                         lux:
                             parsed.lux ?? 0,
