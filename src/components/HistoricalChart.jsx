@@ -91,69 +91,65 @@ data: data.map(
 
     const options = {
 
-        responsive: true,
+    responsive: true,
 
-        maintainAspectRatio: false,
+    maintainAspectRatio: false,
 
-        interaction: {
+    animation: false,
 
-            intersect: false,
+    interaction: {
 
-            mode: 'index'
-        },
+        intersect: false,
 
-        elements: {
+        mode: 'index'
+    },
 
-    line: {
+    plugins: {
 
-        spanGaps: false
-    }
-},
+        legend: {
 
-        plugins: {
+            position: 'top'
+        }
+    },
 
-            legend: {
+    scales: {
 
-                position: 'top'
+        x: {
+
+            ticks: {
+
+                maxTicksLimit: 6,
+
+                autoSkip: true
             }
         },
 
-        scales: {
+        y: {
 
-            x: {
+            type: 'linear',
 
-                ticks: {
+            position: 'left',
 
-                    maxTicksLimit: 6,
+            beginAtZero: true
+        },
 
-                    autoSkip: true
-                }
-            },
+        y1: {
 
-            y: {
+            type: 'linear',
 
-                type: 'linear',
+            position: 'right',
 
-                position: 'left',
+            min: 1500,
 
-                beginAtZero: true
-            },
+            max: 10000,
 
-            y1: {
+            grid: {
 
-                type: 'linear',
-
-                position: 'right',
-
-                beginAtZero: true,
-
-                grid: {
-
-                    drawOnChartArea: false
-                }
+                drawOnChartArea: false
             }
         }
     }
+}
 
     return (
 
