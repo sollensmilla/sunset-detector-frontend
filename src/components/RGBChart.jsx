@@ -30,8 +30,19 @@ export default function RGBChart({
     data
 }) {
 
+    // Sortera efter timestamp
+    const sortedData = [...data].sort(
+        (a, b) =>
+            new Date(a.timestamp) -
+            new Date(b.timestamp)
+    )
+
+    // Visa endast senaste 50 mätningarna
+    const recentData =
+        sortedData.slice(-50)
+
     const labels =
-        data.map(entry =>
+        recentData.map(entry =>
             formatSwedishTime(
                 entry.timestamp
             )
@@ -46,7 +57,7 @@ export default function RGBChart({
             {
                 label: 'Red',
 
-                data: data.map(
+                data: recentData.map(
                     entry => entry.r
                 ),
 
@@ -54,11 +65,11 @@ export default function RGBChart({
                     'rgba(255, 99, 132, 1)',
 
                 backgroundColor:
-                    'rgba(255, 99, 132, 0.15)',
+                    'rgba(255, 99, 132, 0.05)',
 
-                borderWidth: 2,
+                borderWidth: 1.5,
 
-                tension: 0.35,
+                tension: 0.1,
 
                 pointRadius: 0
             },
@@ -66,7 +77,7 @@ export default function RGBChart({
             {
                 label: 'Green',
 
-                data: data.map(
+                data: recentData.map(
                     entry => entry.g
                 ),
 
@@ -74,11 +85,11 @@ export default function RGBChart({
                     'rgba(75, 192, 92, 1)',
 
                 backgroundColor:
-                    'rgba(75, 192, 92, 0.15)',
+                    'rgba(75, 192, 92, 0.05)',
 
-                borderWidth: 2,
+                borderWidth: 1.5,
 
-                tension: 0.35,
+                tension: 0.1,
 
                 pointRadius: 0
             },
@@ -86,7 +97,7 @@ export default function RGBChart({
             {
                 label: 'Blue',
 
-                data: data.map(
+                data: recentData.map(
                     entry => entry.b
                 ),
 
@@ -94,11 +105,11 @@ export default function RGBChart({
                     'rgba(54, 162, 235, 1)',
 
                 backgroundColor:
-                    'rgba(54, 162, 235, 0.15)',
+                    'rgba(54, 162, 235, 0.05)',
 
-                borderWidth: 2,
+                borderWidth: 1.5,
 
-                tension: 0.35,
+                tension: 0.1,
 
                 pointRadius: 0
             }
@@ -125,16 +136,47 @@ export default function RGBChart({
             legend: {
 
                 position: 'top'
+            },
+
+            tooltip: {
+
+                backgroundColor: '#fff',
+
+                titleColor: '#111',
+
+                bodyColor: '#111',
+
+                borderColor: '#ddd',
+
+                borderWidth: 1
             }
         },
 
         scales: {
 
+            x: {
+
+                ticks: {
+
+                    maxTicksLimit: 10
+                },
+
+                grid: {
+
+                    display: false
+                }
+            },
+
             y: {
 
                 min: 0,
 
-                max: 255
+                max: 255,
+
+                ticks: {
+
+                    stepSize: 50
+                }
             }
         }
     }
