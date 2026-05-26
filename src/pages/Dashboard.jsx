@@ -10,6 +10,9 @@ import GradientTimeline
 import HistoricalChart
     from '../components/HistoricalChart'
 
+import RGBChart
+    from '../components/RGBChart'
+
 import { groupByDay }
     from '../utils/groupByDay'
 
@@ -131,6 +134,10 @@ export default function Dashboard() {
             }
 
             <HistoricalChart
+                data={chartData}
+            />
+
+            <RGBChart
                 data={chartData}
             />
 

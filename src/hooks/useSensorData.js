@@ -50,6 +50,15 @@ export function useSensorData(
 
                             ...item,
 
+                            r:
+                                item.rgb?.r ?? 0,
+
+                            g:
+                                item.rgb?.g ?? 0,
+
+                            b:
+                                item.rgb?.b ?? 0,
+
                             skyColor,
 
                             rgb:
@@ -156,6 +165,15 @@ export function useSensorData(
 
                         cct:
                             parsed.cct ?? 0,
+
+                        r:
+                            parsed.rgb?.r ?? 0,
+
+                        g:
+                            parsed.rgb?.g ?? 0,
+
+                        b:
+                            parsed.rgb?.b ?? 0,
 
                         rgb:
                             skyColor,
