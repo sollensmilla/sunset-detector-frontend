@@ -137,11 +137,6 @@ export function useSensorData(
                             message.toString()
                         )
 
-                    console.log(
-                        'MQTT message:',
-                        parsed
-                    )
-
                     const skyColor =
                         parsed.rgb
 
