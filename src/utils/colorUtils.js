@@ -24,13 +24,6 @@ export function softenColor(rgbString) {
     let [r, g, b] =
         values.map(Number)
 
-    r = r + ((255 - r) * 0.18)
-    g = g + ((255 - g) * 0.18)
-    b = b + ((255 - b) * 0.18)
-
-    const average =
-        (r + g + b) / 3
-
     r = average + ((r - average) * 0.82)
     g = average + ((g - average) * 0.82)
     b = average + ((b - average) * 0.82)
