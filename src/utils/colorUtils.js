@@ -1,3 +1,8 @@
+/**
+ * Softens a color by adjusting its RGB values.
+ * @param {string} rgbString - The RGB color string.
+ * @returns {string} The softened color string.
+ */
 export function softenColor(rgbString) {
 
     if (

@@ -1,3 +1,8 @@
+/**
+ * Formats a timestamp as a Swedish time string.
+ * @param {string} timestamp - The timestamp to format.
+ * @returns {string} The formatted time string.
+ */
 export function formatSwedishTime(
     timestamp
 ) {
@@ -16,6 +21,11 @@ export function formatSwedishTime(
         )
 }
 
+/**
+ * Formats a timestamp as a Swedish date string.
+ * @param {string} timestamp - The timestamp to format.
+ * @returns {string} The formatted date string.
+ */
 export function formatSwedishDate(
     timestamp
 ) {
@@ -30,6 +40,11 @@ export function formatSwedishDate(
         )
 }
 
+/**
+ * Calculates the number of minutes since midnight in Stockholm time.
+ * @param {string} timestamp - The timestamp to calculate minutes for.
+ * @returns {number} The number of minutes since midnight.
+ */
 export function stockholmMinutes(
     timestamp
 ) {
@@ -75,6 +90,10 @@ export function stockholmMinutes(
     )
 }
 
+/**
+ * Gets the current number of minutes since midnight in Stockholm time.
+ * @returns {number} The number of minutes since midnight.
+ */
 export function currentStockholmMinutes() {
 
     return stockholmMinutes(
@@ -82,6 +101,11 @@ export function currentStockholmMinutes() {
     )
 }
 
+/**
+ * Gets the date for a timestamp in Stockholm time.
+ * @param {string} timestamp - The timestamp to get the date for.
+ * @returns {string} The date string.
+ */
 export function stockholmDate(
     timestamp
 ) {
