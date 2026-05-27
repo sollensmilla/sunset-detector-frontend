@@ -1,5 +1,6 @@
 import {
     useEffect,
+    useRef,
     useState
 } from 'react'
 
@@ -109,6 +110,9 @@ export function useSensorData(
     const [loading, setLoading] =
         useState(true)
 
+    const clientRef =
+        useRef(null)
+
     useEffect(() => {
 
         async function loadData() {
@@ -135,7 +139,7 @@ export function useSensorData(
 
         loadData()
 
-        const client = mqtt.connect(
+        const mqttClient = mqtt.connect(
 
             import.meta.env.VITE_MQTT_WS_URL,
 
@@ -148,7 +152,10 @@ export function useSensorData(
             }
         )
 
-        client.on(
+        clientRef.current =
+            mqttClient
+
+        mqttClient.on(
             'connect',
             () => {
 
@@ -156,7 +163,7 @@ export function useSensorData(
                     'MQTT connected'
                 )
 
-                client.subscribe(
+                mqttClient.subscribe(
 
                     import.meta.env.VITE_MQTT_TOPIC,
 
@@ -174,7 +181,7 @@ export function useSensorData(
             }
         )
 
-        client.on(
+        mqttClient.on(
             'message',
             (_, message) => {
 
@@ -205,7 +212,7 @@ export function useSensorData(
             }
         )
 
-        client.on(
+        mqttClient.on(
             'error',
             error => {
 
@@ -218,14 +225,32 @@ export function useSensorData(
 
         return () => {
 
-            client.end()
+            mqttClient.end()
         }
 
     }, [hours])
 
+    const toggleLed = state => {
+
+        if (!clientRef.current) {
+
+            return
+        }
+
+        clientRef.current.publish(
+
+            'lnu/iot/ss226uk/command/led',
+
+            JSON.stringify({
+                state
+            })
+        )
+    }
+
     return {
 
         data,
-        loading
+        loading,
+        toggleLed
     }
 }

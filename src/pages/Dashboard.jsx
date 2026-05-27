@@ -13,6 +13,9 @@ import HistoricalChart
 import RGBChart
     from '../components/RGBChart'
 
+import LedControls
+    from '../components/LedControls'
+
 import {
     stockholmDate
 } from '../utils/timeUtils'
@@ -23,7 +26,8 @@ export default function Dashboard() {
 
     const {
         data,
-        loading
+        loading,
+        toggleLed
     } = useSensorData(48)
 
     const timelineData = data
@@ -64,12 +68,6 @@ export default function Dashboard() {
             timelineData.length - 1
         ]
 
-    /*
-    |--------------------------------------------------------------------------
-    | Stockholm dates
-    |--------------------------------------------------------------------------
-    */
-
     const stockholmToday =
         stockholmDate(
             new Date()
@@ -86,12 +84,6 @@ export default function Dashboard() {
         stockholmDate(
             yesterdayDate
         )
-
-    /*
-    |--------------------------------------------------------------------------
-    | Timeline filtering
-    |--------------------------------------------------------------------------
-    */
 
     const today =
         timelineData.filter(item =>
@@ -136,12 +128,13 @@ export default function Dashboard() {
             <CurrentColor
                 latest={latest}
             />
+            
 
             {
                 today.length > 0 && (
 
                     <GradientTimeline
-                        title="Today's Sky"
+                        title="Todays Sky"
                         data={today}
                         isToday={true}
                     />
@@ -152,7 +145,7 @@ export default function Dashboard() {
                 yesterday.length > 0 && (
 
                     <GradientTimeline
-                        title="Yesterday's Sky"
+                        title="Yesterdays Sky"
                         data={yesterday}
                         isToday={false}
                     />
@@ -165,6 +158,10 @@ export default function Dashboard() {
 
             <RGBChart
                 data={chartData}
+            />
+            
+                        <LedControls
+                toggleLed={toggleLed}
             />
 
         </main>
