@@ -3,7 +3,7 @@ import { softenColor }
 
 export function gradientStops(
     data,
-    segments = 16
+    segments = 14
 ) {
 
     if (!data?.length) {
@@ -11,44 +11,63 @@ export function gradientStops(
         return []
     }
 
-    const chunkSize =
-        Math.ceil(
-            data.length / segments
-        )
-
     const stops = []
+
+    const minutesPerSegment =
+        1440 / segments
 
     for (
         let i = 0;
-        i < data.length;
-        i += chunkSize
+        i < segments;
+        i++
     ) {
 
-        const chunk =
-            data.slice(
-                i,
-                i + chunkSize
-            )
+        const targetMinute =
+            i * minutesPerSegment
 
-        const middle =
-            chunk[
-            Math.floor(
-                chunk.length / 2
-            )
-            ]
+        let closest = null
+        let smallestDiff = Infinity
 
-        if (middle) {
+        data.forEach(item => {
+
+            const date =
+                new Date(item.timestamp)
+
+            const stockholm =
+                new Date(
+                    date.toLocaleString(
+                        'en-US',
+                        {
+                            timeZone:
+                                'Europe/Stockholm'
+                        }
+                    )
+                )
+
+            const minutes =
+                stockholm.getHours() * 60 +
+                stockholm.getMinutes()
+
+            const diff =
+                Math.abs(
+                    minutes - targetMinute
+                )
+
+            if (diff < smallestDiff) {
+
+                smallestDiff = diff
+                closest = item
+            }
+        })
+
+        if (closest) {
 
             const color =
-
-                middle.skyColor
-
-                ?? middle.rgb
-
+                closest.skyColor
+                ?? closest.rgb
                 ?? 'rgb(255,255,255)'
 
             stops.push(
-
                 softenColor(color)
             )
         }

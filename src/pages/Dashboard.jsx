@@ -20,15 +20,15 @@ import '../styles/dashboard.css'
 
 export default function Dashboard() {
 
-    const {
-        data: timelineData,
-        loading
-    } = useSensorData(48)
+const {
+    data,
+    loading
+} = useSensorData(48)
 
-    const {
-        data: chartData,
-        loading: chartLoading
-    } = useSensorData(12)
+const timelineData = data
+
+const chartData =
+    data.slice(-720)
 
     if (loading) {
 
