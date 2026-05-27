@@ -5,6 +5,100 @@ import {
 
 import mqtt from 'mqtt'
 
+const API_URL =
+    'https://sky-api-production-9cec.up.railway.app/api/data'
+
+const MAX_ENTRIES = 5000
+
+/**
+ * Creates a sky color string from RGB values.
+ * @param {Object} rgb - The RGB values.
+ * @returns {string} The sky color string.
+ */
+function createSkyColor(rgb) {
+
+    if (!rgb) {
+
+        return 'rgb(255,255,255)'
+    }
+
+    return `rgb(
+        ${rgb.r ?? 0},
+        ${rgb.g ?? 0},
+        ${rgb.b ?? 0}
+    )`
+}
+
+/**
+ * Normalizes sensor data by ensuring all required fields are present.
+ * @param {Object} item - The sensor data item.
+ * @returns {Object} The normalized sensor data item.
+ */
+function normalizeSensorData(item) {
+
+    const skyColor =
+        item.skyColor
+        ?? item.rgb
+        ?? createSkyColor(item.rgb)
+
+    return {
+
+        ...item,
+
+        timestamp:
+            item.timestamp
+            ?? new Date().toISOString(),
+
+        lux:
+            item.lux ?? 0,
+
+        cct:
+            item.cct ?? 0,
+
+        r:
+            item.rgb?.r ?? 0,
+
+        g:
+            item.rgb?.g ?? 0,
+
+        b:
+            item.rgb?.b ?? 0,
+
+        rgb: skyColor,
+
+        skyColor,
+
+        isSunset:
+            item.isSunset
+            ?? (item.cct ?? 0) < 4000
+    }
+}
+
+/**
+ * Fetches sensor data for the specified number of hours.
+ * @param {number} hours - The number of hours to fetch data for.
+ * @returns {Promise<Array>} A promise resolving to the fetched sensor data.
+ */
+async function fetchSensorData(hours) {
+
+    const response =
+        await fetch(
+            `${API_URL}?hours=${hours}`
+        )
+
+    const json =
+        await response.json()
+
+    return json.map(
+        normalizeSensorData
+    )
+}
+
+/**
+ * 
+ * @param {number} hours - The number of hours to fetch data for.
+ * @returns {Object} The sensor data and loading state.
+ */
 export function useSensorData(
     hours = 48
 ) {
@@ -17,75 +111,29 @@ export function useSensorData(
 
     useEffect(() => {
 
-        fetch(
-            `https://sky-api-production-9cec.up.railway.app/api/data?hours=${hours}`
-        )
-            .then(res => res.json())
+        async function loadData() {
 
-            .then(initialData => {
+            try {
 
-                const normalized =
-                    initialData.map(item => {
+                const initialData =
+                    await fetchSensorData(hours)
 
-                        const skyColor =
+                setData(initialData)
 
-                            item.skyColor
-
-                            ?? item.rgb
-
-                            ?? (
-
-                                item.rgb?.r !== undefined
-
-                                    ? `rgb(
-                                        ${item.rgb.r},
-                                        ${item.rgb.g},
-                                        ${item.rgb.b}
-                                      )`
-
-                                    : 'rgb(255,255,255)'
-                            )
-
-                        return {
-
-                            ...item,
-
-                            r:
-                                item.rgb?.r ?? 0,
-
-                            g:
-                                item.rgb?.g ?? 0,
-
-                            b:
-                                item.rgb?.b ?? 0,
-
-                            skyColor,
-
-                            rgb:
-                                skyColor,
-
-                            isSunset:
-                                item.isSunset
-                                ?? (
-                                    item.cct ?? 0
-                                ) < 4000
-                        }
-                    })
-
-                setData(normalized)
-
-                setLoading(false)
-            })
-
-            .catch(error => {
+            } catch (error) {
 
                 console.error(
                     'Fetch error:',
                     error
                 )
 
+            } finally {
+
                 setLoading(false)
-            })
+            }
+        }
+
+        loadData()
 
         const client = mqtt.connect(
 
@@ -112,13 +160,13 @@ export function useSensorData(
 
                     import.meta.env.VITE_MQTT_TOPIC,
 
-                    err => {
+                    error => {
 
-                        if (err) {
+                        if (error) {
 
                             console.error(
                                 'Subscribe error:',
-                                err
+                                error
                             )
                         }
                     }
@@ -137,58 +185,15 @@ export function useSensorData(
                             message.toString()
                         )
 
-                    const skyColor =
-                        parsed.rgb
+                    const realtimeEntry =
+                        normalizeSensorData(parsed)
 
-                            ? `rgb(
-                                ${parsed.rgb.r},
-                                ${parsed.rgb.g},
-                                ${parsed.rgb.b}
-                              )`
+                    setData(prev => [
 
-                            : 'rgb(255,255,255)'
+                        ...prev,
+                        realtimeEntry
 
-                    const realtimeEntry = {
-
-                        timestamp:
-                            parsed.timestamp ||
-                            new Date().toISOString(),
-
-                        lux:
-                            parsed.lux ?? 0,
-
-                        cct:
-                            parsed.cct ?? 0,
-
-                        r:
-                            parsed.rgb?.r ?? 0,
-
-                        g:
-                            parsed.rgb?.g ?? 0,
-
-                        b:
-                            parsed.rgb?.b ?? 0,
-
-                        rgb:
-                            skyColor,
-
-                        skyColor,
-
-                        isSunset:
-                            (parsed.cct ?? 0) < 4000
-                    }
-
-                    setData(prev => {
-
-                        const updated = [
-
-                            ...prev,
-
-                            realtimeEntry
-                        ]
-
-                        return updated.slice(-5000)
-                    })
+                    ].slice(-MAX_ENTRIES))
 
                 } catch (error) {
 
