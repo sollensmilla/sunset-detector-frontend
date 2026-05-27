@@ -1,7 +1,7 @@
 /**
- * Softens a color by adjusting its RGB values.
- * @param {string} rgbString - The RGB color string.
- * @returns {string} The softened color string.
+ * Softens an RGB color string by blending it towards a neutral gray.
+ * @param {*} rgbString 
+ * @returns 
  */
 export function softenColor(rgbString) {
 
@@ -23,6 +23,9 @@ export function softenColor(rgbString) {
 
     let [r, g, b] =
         values.map(Number)
+
+    const average =
+        (r + g + b) / 3
 
     r = average + ((r - average) * 0.82)
     g = average + ((g - average) * 0.82)

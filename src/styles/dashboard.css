@@ -19,6 +19,10 @@ body {
     color: #1d1d1f;
 }
 
+/* =========================
+   DASHBOARD
+========================= */
+
 .dashboard {
 
     position: relative;
@@ -29,13 +33,14 @@ body {
 
     margin: auto;
 
-    padding:
-        4rem 2rem;
+    padding: 4rem 2rem;
 
     overflow: hidden;
 
     display: flex;
+
     flex-direction: column;
+
     gap: 2rem;
 }
 
@@ -44,17 +49,16 @@ body {
     position: absolute;
 
     width: 900px;
+
     height: 900px;
 
     background:
         radial-gradient(circle,
-            rgba(255,
-                170,
-                120,
-                0.35),
+            rgba(255, 170, 120, 0.35),
             transparent 70%);
 
     top: -300px;
+
     left: 50%;
 
     transform:
@@ -66,6 +70,10 @@ body {
     z-index: 0;
 }
 
+/* =========================
+   HERO
+========================= */
+
 .hero {
 
     position: relative;
@@ -74,7 +82,7 @@ body {
 
     text-align: center;
 
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 
 .eyebrow {
@@ -93,9 +101,7 @@ body {
 .hero h1 {
 
     font-size:
-        clamp(4rem,
-            10vw,
-            7rem);
+        clamp(4rem, 10vw, 7rem);
 
     line-height: 1;
 
@@ -111,7 +117,15 @@ body {
     opacity: 0.7;
 
     font-size: 1.1rem;
+
+    max-width: 700px;
+
+    margin-inline: auto;
 }
+
+/* =========================
+   CURRENT COLOR
+========================= */
 
 .current-card {
 
@@ -126,10 +140,7 @@ body {
     margin-bottom: 2rem;
 
     box-shadow:
-        0 10px 40px rgba(0,
-            0,
-            0,
-            0.08);
+        0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
 .current-background {
@@ -166,7 +177,19 @@ body {
 
     z-index: 2;
 
+    min-height: 320px;
+
     padding: 3rem;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
 }
 
 .card-label {
@@ -184,7 +207,8 @@ body {
 
 .current-content h2 {
 
-    font-size: 3rem;
+    font-size:
+        clamp(2.5rem, 7vw, 4rem);
 
     margin: 0;
 }
@@ -193,36 +217,41 @@ body {
 
     display: flex;
 
-    gap: 2rem;
+    justify-content: center;
 
-    margin-top: 3rem;
+    align-items: center;
 
     flex-wrap: wrap;
+
+    gap: 1.5rem;
+
+    width: 100%;
+
+    margin-top: 3rem;
 }
 
 .stat {
 
     background:
-        rgba(255,
-            255,
-            255,
-            0.35);
+        rgba(255, 255, 255, 0.35);
 
-    padding:
-        1rem 1.5rem;
+    padding: 1.2rem 1.6rem;
 
-    border-radius: 1.2rem;
+    border-radius: 1.4rem;
 
     backdrop-filter:
         blur(20px);
 
+    border:
+        1px solid rgba(255, 255, 255, 0.5);
+
     min-width: 140px;
 
-    border:
-        1px solid rgba(255,
-            255,
-            255,
-            0.5);
+    max-width: 180px;
+
+    flex: 1 1 140px;
+
+    text-align: center;
 }
 
 .stat span {
@@ -232,15 +261,18 @@ body {
     opacity: 0.7;
 
     margin-bottom: 0.5rem;
+
+    font-size: 0.95rem;
 }
 
 .stat strong {
 
-    font-size: 1.8rem;
+    font-size:
+        clamp(1.8rem, 5vw, 2.5rem);
 }
 
 /* =========================
-   HISTORICAL CHART
+   CHARTS
 ========================= */
 
 .chart-card {
@@ -250,16 +282,10 @@ body {
     z-index: 2;
 
     background:
-        rgba(255,
-            255,
-            255,
-            0.45);
+        rgba(255, 255, 255, 0.45);
 
     border:
-        1px solid rgba(255,
-            255,
-            255,
-            0.5);
+        1px solid rgba(255, 255, 255, 0.5);
 
     border-radius: 2.5rem;
 
@@ -269,10 +295,7 @@ body {
         blur(30px);
 
     box-shadow:
-        0 10px 40px rgba(0,
-            0,
-            0,
-            0.08);
+        0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
 .chart-card h2 {
@@ -282,6 +305,8 @@ body {
     margin-bottom: 2rem;
 
     font-size: 2rem;
+
+    text-align: center;
 }
 
 .chart-wrapper {
@@ -300,16 +325,10 @@ body {
 .timeline-card {
 
     background:
-        rgba(255,
-            255,
-            255,
-            0.45);
+        rgba(255, 255, 255, 0.45);
 
     border:
-        1px solid rgba(255,
-            255,
-            255,
-            0.5);
+        1px solid rgba(255, 255, 255, 0.5);
 
     border-radius: 2.5rem;
 
@@ -319,10 +338,7 @@ body {
         blur(30px);
 
     box-shadow:
-        0 10px 40px rgba(0,
-            0,
-            0,
-            0.08);
+        0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
 .timeline-header {
@@ -359,14 +375,8 @@ body {
     overflow: hidden;
 
     box-shadow:
-        inset 0 0 30px rgba(255,
-            255,
-            255,
-            0.45),
-        0 10px 35px rgba(0,
-            0,
-            0,
-            0.08);
+        inset 0 0 30px rgba(255, 255, 255, 0.45),
+        0 10px 35px rgba(0, 0, 0, 0.08);
 
     filter:
         saturate(115%) brightness(1.03);
@@ -427,23 +437,138 @@ body {
 }
 
 /* =========================
+   LOADING
+========================= */
+
+.loading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(to bottom,
+            #f7f4ef,
+            #ece7df);
+
+    color: #1d1d1f;
+}
+
+/* =========================
    RESPONSIVE
 ========================= */
 
 @media (max-width: 768px) {
 
-    .gradient-bar {
+    .dashboard {
 
-        height: 90px;
+        padding: 1.2rem;
+
+        gap: 1.5rem;
+    }
+
+    .hero {
+
+        margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+
+        font-size:
+            clamp(2.8rem, 14vw, 4.5rem);
+    }
+
+    .subtitle {
+
+        font-size: 1rem;
+
+        padding: 0 0.5rem;
+    }
+
+    .current-card,
+    .timeline-card,
+    .chart-card {
+
+        border-radius: 2rem;
+    }
+
+    .current-content {
+
+        padding: 2rem 1.2rem;
+
+        min-height: auto;
+    }
+
+    .stats-grid {
+
+        gap: 1rem;
+    }
+
+    .stat {
+
+        min-width: calc(50% - 1rem);
+
+        max-width: none;
+
+        flex: 1 1 calc(50% - 1rem);
     }
 
     .timeline-header h2 {
 
-        font-size: 2.2rem;
+        font-size: 2rem;
+    }
+
+    .gradient-bar {
+
+        height: 80px;
     }
 
     .timeline-labels {
 
         font-size: 0.8rem;
+    }
+
+    .chart-wrapper {
+
+        min-height: 260px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .hero h1 {
+
+        font-size: 3rem;
+    }
+
+    .current-content h2 {
+
+        font-size: 2.2rem;
+    }
+
+    .stats-grid {
+
+        flex-direction: column;
+    }
+
+    .stat {
+
+        width: 100%;
+
+        max-width: 100%;
+    }
+
+    .gradient-bar {
+
+        height: 68px;
+    }
+
+    .timeline-header h2 {
+
+        font-size: 1.7rem;
     }
 }
