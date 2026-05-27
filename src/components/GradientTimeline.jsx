@@ -54,15 +54,15 @@ export default function GradientTimeline({
         [filteredData, isToday]
     )
 
-    const gradient =
-        colors.length
+const gradient =
+    colors.length
 
-            ? colors.join(', ')
+        ? colors.join(', ')
 
-            : `
-                rgb(255,255,255),
-                rgb(240,240,240)
-              `
+        : `
+            rgb(255,255,255),
+            rgb(240,240,240)
+          `
 
     const currentTime =
         new Date()
@@ -128,6 +128,8 @@ export default function GradientTimeline({
                     }}
                 />
 
+                <div className="gradient-glow" />
+
             </div>
 
             <div className="timeline-labels">
@@ -136,9 +138,12 @@ export default function GradientTimeline({
                     {labels.start}
                 </span>
 
-                <span>
-                    {labels.middle}
-                </span>
+                {!isToday && (
+
+                    <span>
+                        {labels.middle}
+                    </span>
+                )}
 
                 <span>
                     {labels.end}

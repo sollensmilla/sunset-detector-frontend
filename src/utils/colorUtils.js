@@ -19,13 +19,20 @@ export function softenColor(rgbString) {
     let [r, g, b] =
         values.map(Number)
 
-    r = Math.min(255, r + 25)
-    g = Math.min(255, g + 25)
-    b = Math.min(255, b + 25)
+    r = r + ((255 - r) * 0.18)
+    g = g + ((255 - g) * 0.18)
+    b = b + ((255 - b) * 0.18)
 
-    r = Math.round(r * 0.9)
-    g = Math.round(g * 0.9)
-    b = Math.round(b * 0.9)
+    const average =
+        (r + g + b) / 3
 
-    return `rgb(${r}, ${g}, ${b})`
+    r = average + ((r - average) * 0.82)
+    g = average + ((g - average) * 0.82)
+    b = average + ((b - average) * 0.82)
+
+    return `rgb(
+        ${Math.round(r)},
+        ${Math.round(g)},
+        ${Math.round(b)}
+    )`
 }
