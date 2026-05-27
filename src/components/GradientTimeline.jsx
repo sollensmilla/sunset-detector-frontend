@@ -1,10 +1,14 @@
 import {
-    useMemo,
-    useRef
+    useMemo
 } from 'react'
 
-import { gradientStops }
-    from '../utils/gradientStops'
+import {
+    gradientStops
+} from '../utils/gradientStops'
+
+import {
+    stockholmDate
+} from '../utils/timeUtils'
 
 export default function GradientTimeline({
     data,
@@ -12,19 +16,42 @@ export default function GradientTimeline({
     isToday = false
 }) {
 
-    const initialGradient =
-        useRef(null)
+    const filteredData = useMemo(() => {
+
+        if (!isToday) {
+
+            return data
+        }
+
+        const today =
+            stockholmDate(
+                new Date().toISOString()
+            )
+
+        return data.filter(
+            item =>
+
+                stockholmDate(
+                    item.timestamp
+                ) === today
+        )
+
+    }, [data, isToday])
 
     const colors = useMemo(
 
         () => gradientStops(
-            data,
-            14
+
+            filteredData,
+
+            isToday
+                ? 60
+                : 40,
+
+            isToday
         ),
 
-        isToday
-            ? [data]
-            : []
+        [filteredData, isToday]
     )
 
     const gradient =
@@ -37,26 +64,8 @@ export default function GradientTimeline({
                 rgb(240,240,240)
               `
 
-    if (
-        !isToday &&
-        !initialGradient.current
-    ) {
-
-        initialGradient.current =
-            gradient
-    }
-
-    const finalGradient =
-
-        isToday
-
-            ? gradient
-
-            : initialGradient.current
-
-    const currentTime = useMemo(
-
-        () => new Date()
+    const currentTime =
+        new Date()
             .toLocaleTimeString(
                 'sv-SE',
                 {
@@ -67,10 +76,7 @@ export default function GradientTimeline({
 
                     minute: '2-digit'
                 }
-            ),
-
-        []
-    )
+            )
 
     const labels = {
 
@@ -104,9 +110,7 @@ export default function GradientTimeline({
 
             </div>
 
-            <div
-                className="gradient-wrapper"
-            >
+            <div className="gradient-wrapper">
 
                 <div
                     className="gradient-bar"
@@ -116,16 +120,11 @@ export default function GradientTimeline({
                         background:
                             `linear-gradient(
                                 to right,
-                                ${finalGradient}
+                                ${gradient}
                             )`,
 
                         transition:
-                            isToday
-                                ? 'background 2s ease-in-out'
-                                : 'none',
-
-                        willChange:
-                            'background'
+                            'background 2s ease-in-out'
                     }}
                 />
 

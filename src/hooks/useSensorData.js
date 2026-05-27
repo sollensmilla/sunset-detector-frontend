@@ -178,12 +178,17 @@ export function useSensorData(
                             (parsed.cct ?? 0) < 4000
                     }
 
-                    setData(prev => [
+                    setData(prev => {
 
-                        ...prev.slice(-500),
+                        const updated = [
 
-                        realtimeEntry
-                    ])
+                            ...prev,
+
+                            realtimeEntry
+                        ]
+
+                        return updated.slice(-5000)
+                    })
 
                 } catch (error) {
 

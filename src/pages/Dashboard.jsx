@@ -13,22 +13,23 @@ import HistoricalChart
 import RGBChart
     from '../components/RGBChart'
 
-import { groupByDay }
-    from '../utils/groupByDay'
+import {
+    stockholmDate
+} from '../utils/timeUtils'
 
 import '../styles/dashboard.css'
 
 export default function Dashboard() {
 
-const {
-    data,
-    loading
-} = useSensorData(48)
+    const {
+        data,
+        loading
+    } = useSensorData(48)
 
-const timelineData = data
+    const timelineData = data
 
-const chartData =
-    data.slice(-720)
+    const chartData =
+        data.slice(-720)
 
     if (loading) {
 
@@ -59,30 +60,54 @@ const chartData =
     }
 
     const latest =
-        timelineData[timelineData.length - 1]
+        timelineData[
+            timelineData.length - 1
+        ]
 
-    const grouped =
-        groupByDay(timelineData)
+    /*
+    |--------------------------------------------------------------------------
+    | Stockholm dates
+    |--------------------------------------------------------------------------
+    */
 
-    const todayKey =
+    const stockholmToday =
+        stockholmDate(
+            new Date()
+        )
+
+    const yesterdayDate =
         new Date()
-            .toLocaleDateString('sv-SE', {
-                timeZone: 'Europe/Stockholm'
-            })
+
+    yesterdayDate.setDate(
+        yesterdayDate.getDate() - 1
+    )
+
+    const stockholmYesterday =
+        stockholmDate(
+            yesterdayDate
+        )
+
+    /*
+    |--------------------------------------------------------------------------
+    | Timeline filtering
+    |--------------------------------------------------------------------------
+    */
 
     const today =
-        grouped[todayKey] ?? []
+        timelineData.filter(item =>
 
-    const yesterdayDate = new Date()
-    yesterdayDate.setDate(yesterdayDate.getDate() - 1)
-
-    const yesterdayKey =
-        yesterdayDate.toLocaleDateString('sv-SE', {
-            timeZone: 'Europe/Stockholm'
-        })
+            stockholmDate(
+                item.timestamp
+            ) === stockholmToday
+        )
 
     const yesterday =
-        grouped[yesterdayKey] ?? []
+        timelineData.filter(item =>
+
+            stockholmDate(
+                item.timestamp
+            ) === stockholmYesterday
+        )
 
     return (
 
@@ -129,6 +154,7 @@ const chartData =
                     <GradientTimeline
                         title="Yesterday's Sky"
                         data={yesterday}
+                        isToday={false}
                     />
                 )
             }
