@@ -3,9 +3,17 @@
     box-sizing: border-box;
 }
 
+html,
 body {
 
     margin: 0;
+
+    padding: 0;
+
+    overflow-x: hidden;
+}
+
+body {
 
     font-family:
         Inter,
@@ -19,6 +27,15 @@ body {
     color: #1d1d1f;
 }
 
+img,
+canvas,
+svg {
+
+    max-width: 100%;
+
+    display: block;
+}
+
 /* =========================
    DASHBOARD
 ========================= */
@@ -26,6 +43,8 @@ body {
 .dashboard {
 
     position: relative;
+
+    width: 100%;
 
     min-height: 100vh;
 
@@ -82,7 +101,7 @@ body {
 
     text-align: center;
 
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .eyebrow {
@@ -136,8 +155,6 @@ body {
     border-radius: 2.5rem;
 
     min-height: 320px;
-
-    margin-bottom: 2rem;
 
     box-shadow:
         0 10px 40px rgba(0, 0, 0, 0.08);
@@ -215,13 +232,10 @@ body {
 
 .stats-grid {
 
-    display: flex;
+    display: grid;
 
-    justify-content: center;
-
-    align-items: center;
-
-    flex-wrap: wrap;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
     gap: 1.5rem;
 
@@ -245,11 +259,7 @@ body {
     border:
         1px solid rgba(255, 255, 255, 0.5);
 
-    min-width: 140px;
-
-    max-width: 180px;
-
-    flex: 1 1 140px;
+    min-width: 0;
 
     text-align: center;
 }
@@ -272,6 +282,127 @@ body {
 }
 
 /* =========================
+   TIMELINE
+========================= */
+
+.timeline-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.45);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.5);
+
+    border-radius: 2.5rem;
+
+    padding: 2rem;
+
+    backdrop-filter:
+        blur(30px);
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+.timeline-header {
+
+    margin-bottom: 2rem;
+
+    text-align: center;
+}
+
+.timeline-header h2 {
+
+    margin: 0;
+
+    font-size: 3rem;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+}
+
+.gradient-wrapper {
+
+    position: relative;
+
+    padding: 1rem 0;
+}
+
+.gradient-bar {
+
+    position: relative;
+
+    height: 140px;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+
+    box-shadow:
+        inset 0 0 30px rgba(255, 255, 255, 0.45),
+        0 10px 35px rgba(0, 0, 0, 0.08);
+
+    filter:
+        saturate(115%) brightness(1.03);
+}
+
+.gradient-bar::after {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.22),
+            rgba(255, 255, 255, 0.04));
+
+    pointer-events: none;
+}
+
+.gradient-glow {
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: 999px;
+
+    backdrop-filter:
+        blur(24px);
+
+    opacity: 0.35;
+
+    pointer-events: none;
+}
+
+.timeline-labels {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 1.5rem;
+
+    opacity: 0.7;
+
+    font-size: 0.95rem;
+
+    font-weight: 500;
+}
+
+/* =========================
    CHARTS
 ========================= */
 
@@ -280,6 +411,8 @@ body {
     position: relative;
 
     z-index: 2;
+
+    overflow: hidden;
 
     background:
         rgba(255, 255, 255, 0.45);
@@ -306,6 +439,8 @@ body {
 
     font-size: 2rem;
 
+    line-height: 1.1;
+
     text-align: center;
 }
 
@@ -315,7 +450,7 @@ body {
 
     width: 100%;
 
-    min-height: 400px;
+    height: 400px;
 }
 
 /* =========================
@@ -411,8 +546,6 @@ body {
         scale(0.98);
 }
 
-/* ON BUTTON */
-
 .led-button.on {
 
     background:
@@ -424,8 +557,6 @@ body {
         0 8px 25px rgba(255, 170, 90, 0.25);
 }
 
-/* OFF BUTTON */
-
 .led-button.off {
 
     background:
@@ -433,146 +564,6 @@ body {
 
     border:
         1px solid rgba(255, 255, 255, 0.5);
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 768px) {
-
-    .led-controls {
-
-        padding: 2rem 1.2rem;
-    }
-
-    .led-buttons {
-
-        flex-direction: column;
-    }
-
-    .led-button {
-
-        width: 100%;
-    }
-}
-
-/* =========================
-   TIMELINE
-========================= */
-
-.timeline-card {
-
-    background:
-        rgba(255, 255, 255, 0.45);
-
-    border:
-        1px solid rgba(255, 255, 255, 0.5);
-
-    border-radius: 2.5rem;
-
-    padding: 2rem;
-
-    backdrop-filter:
-        blur(30px);
-
-    box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.08);
-}
-
-.timeline-header {
-
-    margin-bottom: 2rem;
-
-    text-align: center;
-}
-
-.timeline-header h2 {
-
-    margin: 0;
-
-    font-size: 3rem;
-
-    font-weight: 700;
-}
-
-.gradient-wrapper {
-
-    position: relative;
-
-    padding: 1rem 0;
-}
-
-.gradient-bar {
-
-    position: relative;
-
-    height: 140px;
-
-    border-radius: 999px;
-
-    overflow: hidden;
-
-    box-shadow:
-        inset 0 0 30px rgba(255, 255, 255, 0.45),
-        0 10px 35px rgba(0, 0, 0, 0.08);
-
-    filter:
-        saturate(115%) brightness(1.03);
-
-    transform:
-        translateZ(0);
-}
-
-.gradient-bar::after {
-
-    content: '';
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: inherit;
-
-    background:
-        linear-gradient(to bottom,
-            rgba(255, 255, 255, 0.22),
-            rgba(255, 255, 255, 0.04));
-
-    pointer-events: none;
-}
-
-.gradient-glow {
-
-    position: absolute;
-
-    inset: 0;
-
-    border-radius: 999px;
-
-    backdrop-filter:
-        blur(24px);
-
-    opacity: 0.35;
-
-    pointer-events: none;
-}
-
-.timeline-labels {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-top: 1.5rem;
-
-    opacity: 0.7;
-
-    font-size: 0.95rem;
-
-    font-weight: 500;
 }
 
 /* =========================
@@ -589,16 +580,54 @@ body {
 
     min-height: 100vh;
 
-    background:
-        linear-gradient(to bottom,
-            #f7f4ef,
-            #ece7df);
-
     color: #1d1d1f;
 }
 
 /* =========================
-   RESPONSIVE
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .dashboard {
+
+        padding: 1.5rem;
+    }
+
+    .current-content {
+
+        align-items: flex-start;
+
+        text-align: left;
+
+        padding: 2rem;
+    }
+
+    .stats-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .timeline-header,
+    .chart-card h2 {
+
+        text-align: left;
+    }
+
+    .gradient-bar {
+
+        height: 80px;
+    }
+
+    .chart-wrapper {
+
+        height: 300px;
+    }
+}
+
+/* =========================
+   MOBILE
 ========================= */
 
 @media (max-width: 768px) {
@@ -630,30 +659,17 @@ body {
 
     .current-card,
     .timeline-card,
-    .chart-card {
+    .chart-card,
+    .led-controls {
 
-        border-radius: 2rem;
+        border-radius: 1.5rem;
     }
 
     .current-content {
 
-        padding: 2rem 1.2rem;
-
         min-height: auto;
-    }
 
-    .stats-grid {
-
-        gap: 1rem;
-    }
-
-    .stat {
-
-        min-width: calc(50% - 1rem);
-
-        max-width: none;
-
-        flex: 1 1 calc(50% - 1rem);
+        padding: 1.5rem;
     }
 
     .timeline-header h2 {
@@ -661,9 +677,9 @@ body {
         font-size: 2rem;
     }
 
-    .gradient-bar {
+    .chart-card h2 {
 
-        height: 80px;
+        font-size: 1.5rem;
     }
 
     .timeline-labels {
@@ -673,41 +689,71 @@ body {
 
     .chart-wrapper {
 
-        min-height: 260px;
-    }
-}
-
-@media (max-width: 480px) {
-
-    .hero h1 {
-
-        font-size: 3rem;
+        height: 260px;
     }
 
-    .current-content h2 {
+    .chart-card,
+    .timeline-card,
+    .led-controls,
+    .stat {
 
-        font-size: 2.2rem;
+        backdrop-filter: blur(12px);
     }
 
-    .stats-grid {
+    .led-controls {
+
+        padding: 2rem 1.2rem;
+    }
+
+    .led-buttons {
 
         flex-direction: column;
     }
 
-    .stat {
+    .led-button {
 
         width: 100%;
+    }
+}
 
-        max-width: 100%;
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .dashboard {
+
+        padding: 1rem;
+    }
+
+    .hero h1 {
+
+        font-size: 2.4rem;
+    }
+
+    .current-content h2 {
+
+        font-size: 2rem;
+    }
+
+    .stats-grid {
+
+        grid-template-columns: 1fr;
     }
 
     .gradient-bar {
 
-        height: 68px;
+        height: 52px;
     }
 
     .timeline-header h2 {
 
-        font-size: 1.7rem;
+        font-size: 1.6rem;
+    }
+
+    .chart-wrapper {
+
+        height: 240px;
     }
 }

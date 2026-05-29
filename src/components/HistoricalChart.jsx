@@ -108,7 +108,14 @@ data: data.map(
 
         legend: {
 
-            position: 'top'
+            position: 'top',
+
+            labels: {
+                
+                boxWidth: 12,
+
+                usePointStyle: true
+            }
         }
     },
 
@@ -121,6 +128,10 @@ data: data.map(
                 maxTicksLimit: 6,
 
                 autoSkip: true
+            },
+
+            grid: {
+                display: false
             }
         },
 

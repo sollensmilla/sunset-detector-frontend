@@ -9,7 +9,7 @@ import mqtt from 'mqtt'
 const API_URL =
     'https://sky-api-production-9cec.up.railway.app/api/data'
 
-const MAX_ENTRIES = 5000
+const MAX_ENTRIES = 1000
 
 /**
  * Creates a sky color string from RGB values.

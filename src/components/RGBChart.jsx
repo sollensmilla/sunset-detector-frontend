@@ -15,6 +15,7 @@ import { Line }
 import {
     formatSwedishTime
 } from '../utils/timeUtils'
+import { usePlotArea } from 'recharts'
 
 ChartJS.register(
     CategoryScale,
@@ -134,7 +135,12 @@ const sortedData = [...data].sort(
 
             legend: {
 
-                position: 'top'
+                position: 'top',
+
+                labels: {
+                    boxWidth: 12,
+                    usePointStyle: true
+                }
             },
 
             tooltip: {
