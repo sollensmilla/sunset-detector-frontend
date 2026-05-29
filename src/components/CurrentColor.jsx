@@ -1,3 +1,9 @@
+/**
+ * Component that displays the current color based on the latest data.
+ * @param {Object} param0 - The component props.
+ * @param {Object} param0.latest - The latest sensor data.
+ * @returns {JSX.Element} The rendered CurrentColor component.
+ */
 export default function CurrentColor({
     latest
 }) {

@@ -23,11 +23,7 @@ function createSkyColor(rgb) {
         return 'rgb(255,255,255)'
     }
 
-    return `rgb(
-        ${rgb.r ?? 0},
-        ${rgb.g ?? 0},
-        ${rgb.b ?? 0}
-    )`
+    return `rgb(${rgb.r ?? 0}, ${rgb.g ?? 0}, ${rgb.b ?? 0})`
 }
 
 /**
@@ -37,10 +33,15 @@ function createSkyColor(rgb) {
  */
 function normalizeSensorData(item) {
 
+    const rgbValues = item.rgb ?? {
+        r: item.r ?? 0,
+        g: item.g ?? 0,
+        b: item.b ?? 0
+    }
+
     const skyColor =
-        item.skyColor
-        ?? item.rgb
-        ?? createSkyColor(item.rgb)
+        item.skyColor ??
+        createSkyColor(rgbValues)
 
     return {
 
@@ -57,15 +58,15 @@ function normalizeSensorData(item) {
             item.cct ?? 0,
 
         r:
-            item.rgb?.r ?? 0,
+            rgbValues.r,
 
         g:
-            item.rgb?.g ?? 0,
+            rgbValues.g,
 
         b:
-            item.rgb?.b ?? 0,
+            rgbValues.b,
 
-        rgb: skyColor,
+        rgb: rgbValues,
 
         skyColor,
 
