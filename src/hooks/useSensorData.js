@@ -72,7 +72,10 @@ function normalizeSensorData(item) {
 
         isSunset:
             item.isSunset
-            ?? (item.cct ?? 0) < 4000
+            ?? (
+                (item.lux ?? 0) < 150 &&
+                (item.cct ?? 0) < 4000
+            )
     }
 }
 
