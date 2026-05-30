@@ -39,7 +39,7 @@ const sortedData = [...data].sort(
 )
 
     const recentData =
-        sortedData.slice(-50)
+        sortedData.slice(-100)
 
     const labels =
         recentData.map(entry =>
