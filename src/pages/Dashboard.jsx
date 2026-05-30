@@ -1,10 +1,5 @@
-import {
-    useMemo
-} from 'react'
-
-import {
-    useSensorData
-} from '../hooks/useSensorData'
+import { useSensorData }
+    from '../hooks/useSensorData'
 
 import CurrentColor
     from '../components/CurrentColor'
@@ -40,57 +35,10 @@ export default function Dashboard() {
     const chartData =
         data.slice(-720)
 
-    const stockholmToday =
-        stockholmDate(
-            new Date()
-        )
-
-    const stockholmYesterday =
-        useMemo(() => {
-
-            const yesterday =
-                new Date()
-
-            yesterday.setDate(
-                yesterday.getDate() - 1
-            )
-
-            return stockholmDate(
-                yesterday
-            )
-
-        }, [])
-
-    const today =
-        timelineData.filter(item =>
-            stockholmDate(
-                item.timestamp
-            ) === stockholmToday
-        )
-
-    const yesterday =
-        useMemo(() => {
-
-            return timelineData.filter(
-                item =>
-                    stockholmDate(
-                        item.timestamp
-                    ) === stockholmYesterday
-            )
-
-        }, [
-            timelineData,
-            stockholmYesterday
-        ])
-
-    const latest =
-        timelineData[
-            timelineData.length - 1
-        ]
-
     if (loading) {
 
         return (
+
             <div className="loading">
 
                 <p>
@@ -104,6 +52,7 @@ export default function Dashboard() {
     if (!timelineData.length) {
 
         return (
+
             <div className="loading">
 
                 <p>
@@ -113,6 +62,44 @@ export default function Dashboard() {
             </div>
         )
     }
+
+    const latest =
+        timelineData[
+            timelineData.length - 1
+        ]
+
+    const stockholmToday =
+        stockholmDate(
+            new Date()
+        )
+
+    const yesterdayDate =
+        new Date()
+
+    yesterdayDate.setDate(
+        yesterdayDate.getDate() - 1
+    )
+
+    const stockholmYesterday =
+        stockholmDate(
+            yesterdayDate
+        )
+
+    const today =
+        timelineData.filter(item =>
+
+            stockholmDate(
+                item.timestamp
+            ) === stockholmToday
+        )
+
+    const yesterday =
+        timelineData.filter(item =>
+
+            stockholmDate(
+                item.timestamp
+            ) === stockholmYesterday
+        )
 
     return (
 
@@ -141,22 +128,26 @@ export default function Dashboard() {
             <CurrentColor
                 latest={latest}
             />
+            
 
             {
                 today.length > 0 && (
+
                     <GradientTimeline
                         title="Todays Sky"
                         data={today}
-                        isToday
+                        isToday={true}
                     />
                 )
             }
 
             {
                 yesterday.length > 0 && (
+
                     <GradientTimeline
                         title="Yesterdays Sky"
                         data={yesterday}
+                        isToday={false}
                     />
                 )
             }
@@ -168,8 +159,8 @@ export default function Dashboard() {
             <RGBChart
                 data={chartData}
             />
-
-            <LedControls
+            
+                        <LedControls
                 toggleLed={toggleLed}
             />
 
